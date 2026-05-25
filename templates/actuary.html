@@ -1,0 +1,917 @@
+<!-- =====================================================
+FULL FINAL ACTUARY.HTML
+STITCH AI + FLASK CONNECTED VERSION
+===================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Actuarial Workspace
+    </title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body {
+
+            background:
+                radial-gradient(circle at top right,
+                rgba(59,130,246,0.18),
+                transparent 25%),
+
+                radial-gradient(circle at bottom left,
+                rgba(14,165,233,0.14),
+                transparent 25%),
+
+                #0B1120;
+
+            color: white;
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                Arial,
+                sans-serif;
+        }
+
+        .glass {
+
+            background:
+                rgba(17,24,39,0.75);
+
+            backdrop-filter:
+                blur(16px);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        .glow {
+
+            box-shadow:
+                0 0 40px rgba(59,130,246,0.25);
+        }
+
+        input[type=range] {
+
+            accent-color:
+                #3B82F6;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="max-w-7xl mx-auto px-4 lg:px-8 py-10">
+
+    <!-- =====================================================
+    HEADER
+    ===================================================== -->
+
+    <div class="flex flex-col lg:flex-row
+                justify-between
+                items-start lg:items-center
+                gap-6
+                mb-10">
+
+        <div>
+
+            <h1 class="text-5xl font-black mb-3">
+
+                Actuarial Workspace
+
+            </h1>
+
+            <p class="text-gray-400 text-lg">
+
+                Double Decrement Valuation Engine
+
+            </p>
+
+        </div>
+
+        <button
+
+            onclick="window.location.href='/'"
+
+            class="px-6 py-3
+                   rounded-2xl
+                   bg-blue-600
+                   hover:bg-blue-700
+                   transition-all
+                   font-semibold"
+
+        >
+
+            Back to Customer Portal
+
+        </button>
+
+    </div>
+
+    <!-- =====================================================
+    GRID
+    ===================================================== -->
+
+    <div class="grid grid-cols-1
+                xl:grid-cols-3
+                gap-8">
+
+        <!-- =====================================================
+        LEFT PANEL
+        ===================================================== -->
+
+        <div class="glass rounded-3xl p-8 h-fit">
+
+            <h2 class="text-2xl font-bold mb-8">
+
+                Valuation Inputs
+
+            </h2>
+
+            <!-- HUSBAND -->
+
+            <div class="mb-8">
+
+                <div class="flex justify-between mb-2">
+
+                    <label class="text-gray-300">
+
+                        Husband Age
+
+                    </label>
+
+                    <span id="husband-age-label">
+
+                        45
+
+                    </span>
+
+                </div>
+
+                <input
+
+                    id="usia_suami"
+
+                    type="range"
+
+                    min="18"
+
+                    max="85"
+
+                    value="45"
+
+                    class="w-full"
+
+                >
+
+            </div>
+
+            <!-- WIFE -->
+
+            <div class="mb-8">
+
+                <div class="flex justify-between mb-2">
+
+                    <label class="text-gray-300">
+
+                        Wife Age
+
+                    </label>
+
+                    <span id="wife-age-label">
+
+                        42
+
+                    </span>
+
+                </div>
+
+                <input
+
+                    id="usia_istri"
+
+                    type="range"
+
+                    min="18"
+
+                    max="85"
+
+                    value="42"
+
+                    class="w-full"
+
+                >
+
+            </div>
+
+            <!-- TERM -->
+
+            <div class="mb-8">
+
+                <div class="flex justify-between mb-2">
+
+                    <label class="text-gray-300">
+
+                        Premium Term
+
+                    </label>
+
+                    <span id="term-label">
+
+                        20 Years
+
+                    </span>
+
+                </div>
+
+                <input
+
+                    id="term"
+
+                    type="range"
+
+                    min="10"
+
+                    max="40"
+
+                    value="20"
+
+                    class="w-full"
+
+                >
+
+            </div>
+
+            <!-- BENEFIT -->
+
+            <div class="mb-8">
+
+                <label class="block mb-3 text-gray-300">
+
+                    Sum Assured
+
+                </label>
+
+                <input
+
+                    id="benefit"
+
+                    type="text"
+
+                    value="1000000000"
+
+                    class="w-full
+                           bg-[#1F2937]
+                           border border-white/10
+                           rounded-2xl
+                           p-4
+                           focus:outline-none
+                           focus:border-blue-500"
+
+                >
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <button
+
+                onclick="runValuation()"
+
+                class="w-full
+                       py-4
+                       rounded-2xl
+                       bg-gradient-to-r
+                       from-blue-600
+                       to-cyan-500
+                       font-bold
+                       hover:scale-[1.02]
+                       active:scale-95
+                       transition-all
+                       glow"
+
+            >
+
+                Run Valuation
+
+            </button>
+
+        </div>
+
+        <!-- =====================================================
+        RIGHT
+        ===================================================== -->
+
+        <div class="xl:col-span-2">
+
+            <!-- =====================================================
+            KPI CARDS
+            ===================================================== -->
+
+            <div class="grid grid-cols-1
+                        md:grid-cols-2
+                        gap-6
+                        mb-8">
+
+                <!-- PACKAGE 85 -->
+
+                <div class="glass
+                            rounded-3xl
+                            p-8">
+
+                    <div class="text-sm
+                                uppercase
+                                tracking-widest
+                                text-gray-400
+                                mb-4">
+
+                        Essential Protection
+
+                    </div>
+
+                    <div id="premium85"
+
+                         class="text-4xl
+                                font-black
+                                mb-3">
+
+                        Rp 0
+
+                    </div>
+
+                    <div class="text-gray-400">
+
+                        Coverage Until Age 85
+
+                    </div>
+
+                </div>
+
+                <!-- PACKAGE 111 -->
+
+                <div class="rounded-3xl
+                            p-8
+                            bg-gradient-to-br
+                            from-blue-600
+                            to-cyan-500
+                            glow">
+
+                    <div class="flex justify-between items-center mb-4">
+
+                        <div class="text-sm
+                                    uppercase
+                                    tracking-widest
+                                    text-blue-100">
+
+                            Lifetime Legacy
+
+                        </div>
+
+                        <div class="bg-white/20
+                                    px-3 py-1
+                                    rounded-full
+                                    text-xs">
+
+                            Recommended
+
+                        </div>
+
+                    </div>
+
+                    <div id="premium111"
+
+                         class="text-4xl
+                                font-black
+                                mb-3">
+
+                        Rp 0
+
+                    </div>
+
+                    <div class="text-blue-100">
+
+                        Death Benefit Until Age 111
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =====================================================
+            CHART
+            ===================================================== -->
+
+            <div class="glass
+                        rounded-3xl
+                        p-8
+                        mb-8">
+
+                <div class="flex justify-between items-center mb-8">
+
+                    <div>
+
+                        <h2 class="text-2xl font-bold mb-2">
+
+                            Reserve Projection
+
+                        </h2>
+
+                        <p class="text-gray-400">
+
+                            Reserve comparison between products
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <canvas id="reserveChart"></canvas>
+
+            </div>
+
+            <!-- =====================================================
+            LEDGER
+            ===================================================== -->
+
+            <div class="glass
+                        rounded-3xl
+                        p-8">
+
+                <div class="flex justify-between items-center mb-8">
+
+                    <div>
+
+                        <h2 class="text-2xl font-bold mb-2">
+
+                            Projection Ledger
+
+                        </h2>
+
+                        <p class="text-gray-400">
+
+                            Double decrement valuation table
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full">
+
+                        <thead>
+
+                            <tr class="border-b border-white/10">
+
+                                <th class="text-left p-4">
+
+                                    Year
+
+                                </th>
+
+                                <th class="text-left p-4">
+
+                                    Ages
+
+                                </th>
+
+                                <th class="text-left p-4">
+
+                                    Survival
+
+                                </th>
+
+                                <th class="text-left p-4">
+
+                                    Decrement
+
+                                </th>
+
+                                <th class="text-left p-4">
+
+                                    Reserve
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="ledger-body">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+JAVASCRIPT
+===================================================== -->
+
+<script>
+
+let chart;
+
+// =====================================================
+// SLIDER LABELS
+// =====================================================
+
+const husbandSlider =
+    document.getElementById("usia_suami");
+
+const wifeSlider =
+    document.getElementById("usia_istri");
+
+const termSlider =
+    document.getElementById("term");
+
+husbandSlider.addEventListener(
+    "input",
+    () => {
+
+        document.getElementById(
+            "husband-age-label"
+        ).innerText =
+            husbandSlider.value;
+    }
+);
+
+wifeSlider.addEventListener(
+    "input",
+    () => {
+
+        document.getElementById(
+            "wife-age-label"
+        ).innerText =
+            wifeSlider.value;
+    }
+);
+
+termSlider.addEventListener(
+    "input",
+    () => {
+
+        document.getElementById(
+            "term-label"
+        ).innerText =
+
+            termSlider.value
+            + " Years";
+    }
+);
+
+// =====================================================
+// BENEFIT FORMAT
+// =====================================================
+
+const benefitInput =
+    document.getElementById(
+        "benefit"
+    );
+
+benefitInput.addEventListener(
+    "input",
+    function(e) {
+
+        let value =
+
+            e.target.value.replace(
+                /[^\d]/g,
+                ""
+            );
+
+        e.target.value =
+
+            Number(value)
+            .toLocaleString("id-ID");
+    }
+);
+
+// =====================================================
+// RUN VALUATION
+// =====================================================
+
+async function runValuation() {
+
+    document.getElementById(
+        "premium85"
+    ).innerText = "Running...";
+
+    document.getElementById(
+        "premium111"
+    ).innerText = "Running...";
+
+    const payload = {
+
+        usia_suami:
+            husbandSlider.value,
+
+        usia_istri:
+            wifeSlider.value,
+
+        term:
+            termSlider.value,
+
+        benefit:
+            parseInt(
+
+                benefitInput.value
+                .replace(/[^\d]/g, "")
+
+            )
+    };
+
+    try {
+
+        const response =
+
+            await fetch(
+
+                "/calculate_actuary",
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+        const data =
+            await response.json();
+
+        const p85 =
+            data.package85;
+
+        const p111 =
+            data.package111;
+
+        // =================================================
+        // PREMIUMS
+        // =================================================
+
+        document.getElementById(
+            "premium85"
+        ).innerText =
+
+            "Rp " +
+
+            Number(
+                p85.premium
+            ).toLocaleString("id-ID");
+
+        document.getElementById(
+            "premium111"
+        ).innerText =
+
+            "Rp " +
+
+            Number(
+                p111.premium
+            ).toLocaleString("id-ID");
+
+        // =================================================
+        // LEDGER
+        // =================================================
+
+        let ledgerHTML = "";
+
+        p111.ledger
+            .slice(0, 40)
+            .forEach(row => {
+
+            ledgerHTML += `
+
+            <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+
+                <td class="p-4">
+                    ${row.year}
+                </td>
+
+                <td class="p-4">
+                    ${row.husband_age}
+                    /
+                    ${row.wife_age}
+                </td>
+
+                <td class="p-4">
+                    ${row.survival_probability}
+                </td>
+
+                <td class="p-4">
+                    ${row.joint_decrement}
+                </td>
+
+                <td class="p-4 font-bold text-cyan-400">
+
+                    Rp ${Number(
+                        row.reserve
+                    ).toLocaleString("id-ID")}
+
+                </td>
+
+            </tr>
+            `;
+        });
+
+        document.getElementById(
+            "ledger-body"
+        ).innerHTML = ledgerHTML;
+
+        // =================================================
+        // CHART
+        // =================================================
+
+        updateChart(
+
+            p85.ledger,
+
+            p111.ledger
+
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        alert(
+            "Valuation Error"
+        );
+    }
+}
+
+// =====================================================
+// CHART
+// =====================================================
+
+function updateChart(
+
+    ledger85,
+    ledger111
+
+) {
+
+    const ctx =
+
+        document.getElementById(
+            "reserveChart"
+        );
+
+    if(chart) {
+
+        chart.destroy();
+    }
+
+    chart = new Chart(ctx, {
+
+        type: "line",
+
+        data: {
+
+            labels:
+
+                ledger85.map(
+                    x => x.year
+                ),
+
+            datasets: [
+
+                {
+
+                    label:
+                        "Essential Protection",
+
+                    data:
+
+                        ledger85.map(
+                            x => x.reserve
+                        ),
+
+                    borderWidth: 3,
+
+                    tension: 0.4
+                },
+
+                {
+
+                    label:
+                        "Lifetime Legacy",
+
+                    data:
+
+                        ledger111.map(
+                            x => x.reserve
+                        ),
+
+                    borderWidth: 3,
+
+                    tension: 0.4
+                }
+            ]
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    labels: {
+
+                        color: "white"
+                    }
+                }
+            },
+
+            scales: {
+
+                x: {
+
+                    ticks: {
+
+                        color: "white"
+                    }
+                },
+
+                y: {
+
+                    ticks: {
+
+                        color: "white"
+                    }
+                }
+            }
+        }
+    });
+}
+
+// =====================================================
+// AUTO RUN
+// =====================================================
+
+[
+    husbandSlider,
+    wifeSlider,
+    termSlider
+].forEach(input => {
+
+    input.addEventListener(
+        "input",
+        runValuation
+    );
+});
+
+benefitInput.addEventListener(
+    "change",
+    runValuation
+);
+
+// =====================================================
+// INITIAL
+// =====================================================
+
+runValuation();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!-- =====================================================
+FULL FINAL CUSTOMER.HTML
+CONNECTED TO FLASK BACKEND
+MODERN INSURTECH VERSION
+===================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Joint-Life Insurance
+    </title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        body {
+
+            background:
+                radial-gradient(circle at top right,
+                rgba(59,130,246,0.18),
+                transparent 25%),
+
+                radial-gradient(circle at bottom left,
+                rgba(14,165,233,0.14),
+                transparent 25%),
+
+                #0B1120;
+
+            color: white;
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                Arial,
+                sans-serif;
+        }
+
+        .glass {
+
+            background:
+                rgba(17,24,39,0.72);
+
+            backdrop-filter:
+                blur(16px);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        .glow {
+
+            box-shadow:
+                0 0 40px rgba(59,130,246,0.22);
+        }
+
+        input[type=range] {
+
+            accent-color:
+                #3B82F6;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="max-w-7xl mx-auto px-4 lg:px-8 py-10">
+
+    <!-- =====================================================
+    HERO
+    ===================================================== -->
+
+    <div class="flex flex-col lg:flex-row
+                justify-between
+                items-start lg:items-center
+                gap-8
+                mb-12">
+
+        <div>
+
+            <div class="inline-flex
+                        items-center
+                        gap-2
+                        px-4 py-2
+                        rounded-full
+                        glass
+                        mb-6">
+
+                <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+
+                <span class="text-sm text-gray-300">
+
+                    BI Rate:
+                    {{ bi_rate }}%
+
+                </span>
+
+            </div>
+
+            <h1 class="text-5xl lg:text-7xl
+                       font-black
+                       leading-tight
+                       mb-6">
+
+                Joint-Life <br>
+
+                <span class="bg-gradient-to-r
+                             from-blue-400
+                             to-cyan-400
+                             bg-clip-text
+                             text-transparent">
+
+                    Insurance
+
+                </span>
+
+            </h1>
+
+            <p class="text-xl text-gray-400 max-w-2xl">
+
+                AI-powered double decrement insurance valuation platform
+                for modern lifetime protection planning.
+
+            </p>
+
+        </div>
+
+        <button
+
+            onclick="window.location.href='/actuary'"
+
+            class="px-6 py-4
+                   rounded-2xl
+                   bg-gradient-to-r
+                   from-blue-600
+                   to-cyan-500
+                   font-bold
+                   hover:scale-[1.02]
+                   active:scale-95
+                   transition-all
+                   glow"
+
+        >
+
+            Open Actuarial Workspace
+
+        </button>
+
+    </div>
+
+    <!-- =====================================================
+    MAIN GRID
+    ===================================================== -->
+
+    <div class="grid grid-cols-1
+                xl:grid-cols-5
+                gap-8">
+
+        <!-- =====================================================
+        INPUT PANEL
+        ===================================================== -->
+
+        <div class="xl:col-span-2">
+
+            <div class="glass rounded-3xl p-8">
+
+                <h2 class="text-3xl font-bold mb-8">
+
+                    Customize Your Protection
+
+                </h2>
+
+                <!-- HUSBAND -->
+
+                <div class="mb-8">
+
+                    <div class="flex justify-between mb-3">
+
+                        <label class="text-gray-300">
+
+                            Husband Age
+
+                        </label>
+
+                        <span id="husband-age-label">
+
+                            45
+
+                        </span>
+
+                    </div>
+
+                    <input
+
+                        id="usia_suami"
+
+                        type="range"
+
+                        min="18"
+
+                        max="85"
+
+                        value="45"
+
+                        class="w-full"
+
+                    >
+
+                </div>
+
+                <!-- WIFE -->
+
+                <div class="mb-8">
+
+                    <div class="flex justify-between mb-3">
+
+                        <label class="text-gray-300">
+
+                            Wife Age
+
+                        </label>
+
+                        <span id="wife-age-label">
+
+                            42
+
+                        </span>
+
+                    </div>
+
+                    <input
+
+                        id="usia_istri"
+
+                        type="range"
+
+                        min="18"
+
+                        max="85"
+
+                        value="42"
+
+                        class="w-full"
+
+                    >
+
+                </div>
+
+                <!-- TERM -->
+
+                <div class="mb-8">
+
+                    <div class="flex justify-between mb-3">
+
+                        <label class="text-gray-300">
+
+                            Premium Payment Term
+
+                        </label>
+
+                        <span id="term-label">
+
+                            20 Years
+
+                        </span>
+
+                    </div>
+
+                    <input
+
+                        id="term"
+
+                        type="range"
+
+                        min="10"
+
+                        max="40"
+
+                        value="20"
+
+                        class="w-full"
+
+                    >
+
+                </div>
+
+                <!-- BENEFIT -->
+
+                <div class="mb-8">
+
+                    <label class="block mb-3 text-gray-300">
+
+                        Sum Assured
+
+                    </label>
+
+                    <input
+
+                        id="benefit"
+
+                        type="text"
+
+                        value="1000000000"
+
+                        class="w-full
+                               bg-[#1F2937]
+                               border border-white/10
+                               rounded-2xl
+                               p-4
+                               focus:outline-none
+                               focus:border-blue-500"
+
+                    >
+
+                </div>
+
+                <!-- BUTTON -->
+
+                <button
+
+                    onclick="calculatePremium()"
+
+                    class="w-full
+                           py-5
+                           rounded-2xl
+                           bg-gradient-to-r
+                           from-blue-600
+                           to-cyan-500
+                           font-bold
+                           text-lg
+                           hover:scale-[1.02]
+                           active:scale-95
+                           transition-all
+                           glow"
+
+                >
+
+                    Calculate Premium
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- =====================================================
+        PREMIUM CARDS
+        ===================================================== -->
+
+        <div class="xl:col-span-3">
+
+            <div class="grid grid-cols-1
+                        lg:grid-cols-2
+                        gap-8">
+
+                <!-- =====================================================
+                PACKAGE 85
+                ===================================================== -->
+
+                <div class="glass rounded-3xl p-8">
+
+                    <div class="mb-6">
+
+                        <div class="text-sm
+                                    uppercase
+                                    tracking-widest
+                                    text-gray-400
+                                    mb-3">
+
+                            Essential Protection
+
+                        </div>
+
+                        <h2 class="text-3xl font-bold">
+
+                            Coverage Until Age 85
+
+                        </h2>
+
+                    </div>
+
+                    <div class="mb-8">
+
+                        <div class="text-gray-400 mb-2">
+
+                            Annual Premium
+
+                        </div>
+
+                        <div id="premium85"
+
+                             class="text-5xl
+                                    font-black
+                                    leading-tight">
+
+                            Rp 0
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-8">
+
+                        <div class="text-gray-400 mb-2">
+
+                            Monthly Premium
+
+                        </div>
+
+                        <div id="monthly85"
+
+                             class="text-2xl font-bold">
+
+                            Rp 0
+
+                        </div>
+
+                    </div>
+
+                    <div class="space-y-4 text-gray-300">
+
+                        <div class="flex items-center gap-3">
+
+                            <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+
+                            Death Protection Until Age 85
+
+                        </div>
+
+                        <div class="flex items-center gap-3">
+
+                            <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+
+                            Critical Illness Until Age 85
+
+                        </div>
+
+                        <div class="mt-6
+                                    bg-yellow-500/10
+                                    border border-yellow-500/20
+                                    rounded-2xl
+                                    p-4
+                                    text-yellow-300">
+
+                            Coverage expires at age 85.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- =====================================================
+                PACKAGE 111
+                ===================================================== -->
+
+                <div class="rounded-3xl
+                            p-8
+                            bg-gradient-to-br
+                            from-blue-600
+                            to-cyan-500
+                            glow
+                            relative
+                            overflow-hidden">
+
+                    <div class="absolute
+                                top-4
+                                right-4
+                                bg-white/20
+                                px-4 py-2
+                                rounded-full
+                                text-sm
+                                font-semibold">
+
+                        Recommended
+
+                    </div>
+
+                    <div class="mb-6">
+
+                        <div class="text-sm
+                                    uppercase
+                                    tracking-widest
+                                    text-blue-100
+                                    mb-3">
+
+                            Lifetime Legacy
+
+                        </div>
+
+                        <h2 class="text-3xl font-bold">
+
+                            Lifetime Death Protection
+
+                        </h2>
+
+                    </div>
+
+                    <div class="mb-8">
+
+                        <div class="text-blue-100 mb-2">
+
+                            Annual Premium
+
+                        </div>
+
+                        <div id="premium111"
+
+                             class="text-5xl
+                                    font-black
+                                    leading-tight">
+
+                            Rp 0
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-8">
+
+                        <div class="text-blue-100 mb-2">
+
+                            Monthly Premium
+
+                        </div>
+
+                        <div id="monthly111"
+
+                             class="text-2xl font-bold">
+
+                            Rp 0
+
+                        </div>
+
+                    </div>
+
+                    <div class="space-y-4 text-white">
+
+                        <div class="flex items-center gap-3">
+
+                            <div class="w-2 h-2 rounded-full bg-white"></div>
+
+                            Death Benefit Until Age 111
+
+                        </div>
+
+                        <div class="flex items-center gap-3">
+
+                            <div class="w-2 h-2 rounded-full bg-white"></div>
+
+                            Critical Illness Until Age 85
+
+                        </div>
+
+                        <div class="mt-6
+                                    bg-white/10
+                                    border border-white/20
+                                    rounded-2xl
+                                    p-4">
+
+                            Lifetime death protection included.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =====================================================
+            COMPARISON SECTION
+            ===================================================== -->
+
+            <div class="glass rounded-3xl p-8 mt-8">
+
+                <h2 class="text-3xl font-bold mb-8">
+
+                    Protection Comparison
+
+                </h2>
+
+                <div class="grid grid-cols-1
+                            md:grid-cols-2
+                            gap-8">
+
+                    <div>
+
+                        <h3 class="text-2xl font-bold mb-4">
+
+                            Essential Protection
+
+                        </h3>
+
+                        <p class="text-gray-400 leading-relaxed">
+
+                            Lower premium with protection coverage until
+                            age 85. Suitable for customers seeking more
+                            affordable protection during active retirement years.
+
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-2xl font-bold mb-4">
+
+                            Lifetime Legacy
+
+                        </h3>
+
+                        <p class="text-gray-400 leading-relaxed">
+
+                            Slightly higher premium with lifetime death
+                            protection until age 111, ensuring legacy continuity
+                            for beneficiaries.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+JAVASCRIPT
+===================================================== -->
+
+<script>
+
+// =====================================================
+// SLIDER LABELS
+// =====================================================
+
+const husbandSlider =
+    document.getElementById(
+        "usia_suami"
+    );
+
+const wifeSlider =
+    document.getElementById(
+        "usia_istri"
+    );
+
+const termSlider =
+    document.getElementById(
+        "term"
+    );
+
+husbandSlider.addEventListener(
+    "input",
+    () => {
+
+        document.getElementById(
+            "husband-age-label"
+        ).innerText =
+            husbandSlider.value;
+    }
+);
+
+wifeSlider.addEventListener(
+    "input",
+    () => {
+
+        document.getElementById(
+            "wife-age-label"
+        ).innerText =
+            wifeSlider.value;
+    }
+);
+
+termSlider.addEventListener(
+    "input",
+    () => {
+
+        document.getElementById(
+            "term-label"
+        ).innerText =
+
+            termSlider.value
+            + " Years";
+    }
+);
+
+// =====================================================
+// BENEFIT FORMAT
+// =====================================================
+
+const benefitInput =
+    document.getElementById(
+        "benefit"
+    );
+
+benefitInput.addEventListener(
+    "input",
+    function(e) {
+
+        let value =
+
+            e.target.value.replace(
+                /[^\d]/g,
+                ""
+            );
+
+        e.target.value =
+
+            Number(value)
+            .toLocaleString("id-ID");
+    }
+);
+
+// =====================================================
+// CALCULATE PREMIUM
+// =====================================================
+
+async function calculatePremium() {
+
+    document.getElementById(
+        "premium85"
+    ).innerText = "Calculating...";
+
+    document.getElementById(
+        "premium111"
+    ).innerText = "Calculating...";
+
+    const payload = {
+
+        usia_suami:
+            husbandSlider.value,
+
+        usia_istri:
+            wifeSlider.value,
+
+        term:
+            termSlider.value,
+
+        benefit:
+            parseInt(
+
+                benefitInput.value
+                .replace(/[^\d]/g, "")
+
+            )
+    };
+
+    try {
+
+        const response =
+
+            await fetch(
+
+                "/calculate_customer",
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+        const data =
+            await response.json();
+
+        document.getElementById(
+            "premium85"
+        ).innerText =
+
+            "Rp " +
+
+            Number(
+                data.premium_85
+            ).toLocaleString("id-ID");
+
+        document.getElementById(
+            "premium111"
+        ).innerText =
+
+            "Rp " +
+
+            Number(
+                data.premium_111
+            ).toLocaleString("id-ID");
+
+        document.getElementById(
+            "monthly85"
+        ).innerText =
+
+            "Rp " +
+
+            Number(
+                data.monthly_85
+            ).toLocaleString("id-ID");
+
+        document.getElementById(
+            "monthly111"
+        ).innerText =
+
+            "Rp " +
+
+            Number(
+                data.monthly_111
+            ).toLocaleString("id-ID");
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        alert(
+            "Calculation Error"
+        );
+    }
+}
+
+// =====================================================
+// AUTO CALCULATE
+// =====================================================
+
+[
+    husbandSlider,
+    wifeSlider,
+    termSlider
+].forEach(input => {
+
+    input.addEventListener(
+        "input",
+        calculatePremium
+    );
+});
+
+benefitInput.addEventListener(
+    "change",
+    calculatePremium
+);
+
+// =====================================================
+// INITIAL
+// =====================================================
+
+calculatePremium();
+
+</script>
+
+</body>
+</html>
